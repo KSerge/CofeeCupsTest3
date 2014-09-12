@@ -15,5 +15,4 @@ media
 static
 *.dat
 *.coverage
-*.txt
 uploads
