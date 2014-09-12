@@ -44,7 +44,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'apps.hello.middleware.IncomingRequestsMiddleware',
 )
 
 ROOT_URLCONF = 'fortytwo_test_task.urls'
@@ -80,7 +79,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 
-# Additional locations of static files
+# Additional locations of assets files
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets'),
 )
@@ -88,9 +87,4 @@ STATICFILES_DIRS = (
 # Template Settings
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'apps.hello.views.context_processor',
-    'django.contrib.auth.context_processors.auth',
 )
