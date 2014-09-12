@@ -23,3 +23,6 @@ div.label-wrapper{
 .text-allign-left{
     text-align: left !important;
 }
+textarea{
+    resize: none;
+}

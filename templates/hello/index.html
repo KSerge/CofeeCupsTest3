@@ -22,6 +22,10 @@
         <div class="label-wrapper text-allign-left">Date of birth:</div>
         {{person.date_of_birth}}
     </p>
+    <p>
+        <div class="toplevel-label-wrapper">Bio:</div>
+        <textarea cols="50" rows="6">{{person.bio}}</textarea>
+    </p>
 </div>
 <div class="inline">
     <p><div class="label-wrapper text-allign-left">Contacts</div></p>
@@ -37,10 +41,6 @@
     </p>
         <div class="toplevel-label-wrapper">Other contacts:</div>
         <textarea cols="50" rows="6">{{person.other_contacts}}</textarea>
-    </p>
-    <p>
-        <div class="toplevel-label-wrapper">Bio:</div>
-        <textarea cols="50" rows="6">{{person.bio}}</textarea>
     </p>
 </div>
 {% else %}
