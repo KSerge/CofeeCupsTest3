@@ -20,7 +20,8 @@
         "bio": "Information about bio",
         "jabber": "squidvard@jabberpl.org",
         "skype": "skype profile",
-        "other_contacts": "Information about other contacts"
+        "other_contacts": "Information about other contacts",
+        "profile_image": null
     }
 },
 {
