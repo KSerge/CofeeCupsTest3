@@ -25,3 +25,15 @@ def view_requests(request):
         request,
         {'requests': stored_requests})
     return render(request, 'hello/requests.html', request_context)
+
+
+def edit(request):
+    pass
+
+
+def login(request):
+    pass
+
+
+def logout(request):
+    pass
