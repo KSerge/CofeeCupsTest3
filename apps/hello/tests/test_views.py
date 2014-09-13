@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from ..models import IncomingRequest, Person
 from django.conf import settings
 import os
+from ..views import SAVE_FORM_ERRORS_MESSAGE
 
 TEST_SKYPE_NAME = 'New Skype Name'
 TEST_USERNAME = 'Username'
@@ -60,7 +61,7 @@ class HelloAppTestCase(TestCase):
     def test_edit_view_not_valid_data(self):
         url = reverse('edit')
         response = self.client.post(url, {'date_of_birth': True})
-        self.assertIn('Provided data is not correct. Please review all errors.', response.content)
+        self.assertIn(SAVE_FORM_ERRORS_MESSAGE, response.content)
 
     def test_login_view_valid_data(self):
         url = reverse('login')
