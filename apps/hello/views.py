@@ -6,8 +6,11 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from .forms import PersonForm, UserForm
 from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 SAVE_FORM_ERRORS_MESSAGE = 'Provided data is not correct. Please review all errors.'
+INVALID_LOGIN_MESSAGE = 'Invalid login data'
 
 
 def context_processor(request):
@@ -65,9 +68,36 @@ def edit(request):
     return render(request, 'hello/edit.html', request_context)
 
 
-def login(request):
-    pass
+def login_user(request):
+    message = ''
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                message = "Your account is disabled"
+        else:
+            message = INVALID_LOGIN_MESSAGE
+    else:
+        user_form = UserForm()
+
+    request_context = RequestContext(
+        request,
+        {
+            'form': user_form,
+            'message': message
+        })
+
+    return render(request, 'hello/login.html', request_context)
 
 
-def logout(request):
-    pass
+@login_required
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))

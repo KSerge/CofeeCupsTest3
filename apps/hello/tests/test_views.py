@@ -3,7 +3,7 @@ from django.core.urlresolvers import reverse
 from ..models import IncomingRequest, Person
 from django.conf import settings
 import os
-from ..views import SAVE_FORM_ERRORS_MESSAGE
+from ..views import SAVE_FORM_ERRORS_MESSAGE, INVALID_LOGIN_MESSAGE
 
 TEST_SKYPE_NAME = 'New Skype Name'
 TEST_USERNAME = 'Username'
@@ -65,7 +65,7 @@ class HelloAppTestCase(TestCase):
 
     def test_login_view_valid_data(self):
         url = reverse('login')
-        response = self.client.post(url, {'username': 'Serge', 'password': '12345'})
+        response = self.client.post(url, {'username': 'Serge', 'password': '11111'})
         self.assertRedirects(response,
                              reverse('index'),
                              status_code=302,
@@ -75,6 +75,6 @@ class HelloAppTestCase(TestCase):
     def test_login_view_not_valid_data(self):
         url = reverse('login')
         response = self.client.post(url, {'username': TEST_USERNAME, 'password': TEST_PASSWORD})
-        self.assertIn('Not valid login data', response.content)
+        self.assertIn(INVALID_LOGIN_MESSAGE, response.content)
 
 
