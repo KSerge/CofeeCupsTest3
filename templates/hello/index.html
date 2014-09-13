@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-
+{% load hello_templatetags %}
 {% block extra_head %}
 <link rel="stylesheet" href='{% static "css/main.css" %}' />
 {% endblock %}
@@ -54,6 +54,7 @@
 {% else %}
     <a href="{% url 'login' %}">Login</a>
 {% endif %}
+{% edit_link person %}
 </div>
 <div class="sections-separator"></div>
 <a href="{% url 'requests' %}">Requests</a>
