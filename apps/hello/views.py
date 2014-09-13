@@ -1,6 +1,13 @@
 from django.shortcuts import render
 from .models import Person, IncomingRequest
 from django.template import RequestContext
+from django.conf import settings
+
+
+def context_processor(request):
+    return {
+        'settings': settings,
+    }
 
 
 def index(request):
