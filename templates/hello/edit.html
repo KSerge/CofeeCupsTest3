@@ -3,6 +3,32 @@
 
 {% block extra_head %}
 <link rel="stylesheet" href='{% static "css/main.css" %}' />
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+$(document).ready(function () {
+    $("#mainForm").submit(function(e){
+        $('#overlayContent').show();
+        $('#overlay').show();
+        $.ajax({
+            url : $(this).attr("action"),
+            type: "POST",
+            data : new FormData($(this)[0]),
+            success:function(data, textStatus, jqXHR){
+                $('#overlay').hide();
+                $('#overlayContent').hide();
+                top.location.href = data['redirect_url'];
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                $('#overlay').hide();
+                $('#overlayContent').hide();
+            }
+        });
+        e.preventDefault();
+    });
+});
+</script>
 {% endblock %}
 
 {% block content %}

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Person, IncomingRequest
 from django.template import RequestContext
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.models import User
 from .forms import PersonForm, UserForm, UserLoginForm
 from django.core.urlresolvers import reverse
@@ -50,6 +50,9 @@ def edit(request):
         if user_form.is_valid() and person_form.is_valid():
             user_form.save()
             person_form.save()
+            if request.is_ajax():
+                data = {'redirect_url': reverse('index')}
+                return HttpResponse(json.dumps(data), content_type="application/json")
             return HttpResponseRedirect(reverse('index'))
         else:
             message = SAVE_FORM_ERRORS_MESSAGE
