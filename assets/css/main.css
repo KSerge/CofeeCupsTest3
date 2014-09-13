@@ -36,3 +36,9 @@ div.command-buttons{
     padding: 10px 0px;
     clear: both;
 }
+.profile-image{
+    display: inline-block;
+    min-width: 300px;
+    min-height: 400px;
+    border: 2px solid #778899;
+}
