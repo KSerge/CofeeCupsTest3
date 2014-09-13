@@ -1,7 +1,12 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from ..models import IncomingRequest
+from ..models import IncomingRequest, Person
+from django.conf import settings
+import os
 
+TEST_SKYPE_NAME = 'New Skype Name'
+TEST_USERNAME = 'Username'
+TEST_PASSWORD = 'password'
 
 class HelloAppTestCase(TestCase):
     fixtures = ['initial_data.json']
@@ -31,4 +36,44 @@ class HelloAppTestCase(TestCase):
         self.assertTrue(IncomingRequest.objects.all().count() > 10)
         self.assertTrue(response.context['requests'].count() == 10)
         self.assertIn('<h4>Requests:</h4>', response.content)
+
+    def test_edit_view_valid_data(self):
+        file_path = os.path.join(settings.BASE_DIR, 'apps', 'hello', 'tests', 'test_image.png')
+        f = open(file_path, 'r')
+        post_data = {'profile_image': f, 'skype': TEST_SKYPE_NAME}
+        url = reverse('edit')
+        response = self.client.post(url, post_data)
+        self.assertRedirects(response,
+                             reverse('index'),
+                             status_code=302,
+                             target_status_code=200,
+                             )
+        self.assertTrue(Person.objects.get(pk=1).skype == TEST_SKYPE_NAME)
+        f.close()
+        uploaded_file_path = os.path.join(settings.BASE_DIR,
+                                          'uploads',
+                                          'profile',
+                                          'test_image.png')
+        self.assertTrue(os.path.isfile(uploaded_file_path))
+        os.remove(uploaded_file_path)
+
+    def test_edit_view_not_valid_data(self):
+        url = reverse('edit')
+        response = self.client.post(url, {'date_of_birth': True})
+        self.assertIn('Provided data is not correct. Please review all errors.', response.content)
+
+    def test_login_view_valid_data(self):
+        url = reverse('login')
+        response = self.client.post(url, {'username': 'Serge', 'password': '12345'})
+        self.assertRedirects(response,
+                             reverse('index'),
+                             status_code=302,
+                             target_status_code=200,
+                             )
+
+    def test_login_view_not_valid_data(self):
+        url = reverse('login')
+        response = self.client.post(url, {'username': TEST_USERNAME, 'password': TEST_PASSWORD})
+        self.assertIn('Not valid login data', response.content)
+
 
