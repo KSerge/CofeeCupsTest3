@@ -1,5 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from ..models import Person
+from django.template import Template, Context
 
 
 class HelloAppTestCase(TestCase):
@@ -11,3 +13,9 @@ class HelloAppTestCase(TestCase):
         response = self.client.get(url)
         self.assertIn('settings', response.context)
 
+    def test_edit_link_template_tag(self):
+        person = Person.objects.get(pk=1)
+        c = Context({'person': person})
+        test_template = Template("{% load hello_templatestags %} {% edit_link person %}")
+        rendered = test_template.render(c)
+        self.assertIn('<a href="/admin/hello/person/1/">Edit</a>', rendered)
