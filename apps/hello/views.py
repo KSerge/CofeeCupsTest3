@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Person
+from .models import Person, IncomingRequest
 from django.template import RequestContext
 
 
@@ -10,3 +10,11 @@ def index(request):
         person = Person()
     request_context = RequestContext(request,  {'person': person})
     return render(request, 'hello/index.html', request_context)
+
+
+def view_requests(request):
+    stored_requests = IncomingRequest.objects.order_by('visiting_date')[0:10]
+    request_context = RequestContext(
+        request,
+        {'requests': stored_requests})
+    return render(request, 'hello/requests.html', request_context)

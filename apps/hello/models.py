@@ -9,3 +9,9 @@ class Person(models.Model):
     jabber = models.EmailField(max_length=100, null=True, blank=True)
     skype = models.CharField(max_length=50, null=True, blank=True)
     other_contacts = models.CharField(max_length=254, null=True, blank=True)
+
+
+class IncomingRequest(models.Model):
+    path = models.CharField(max_length=500)
+    visiting_date = models.DateTimeField(auto_now=True)
+    priority = models.PositiveSmallIntegerField(default=0)
