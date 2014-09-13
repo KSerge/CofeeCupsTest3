@@ -10,3 +10,7 @@ def index(request):
         person = Person()
     request_context = RequestContext(request,  {'person': person})
     return render(request, 'hello/index.html', request_context)
+
+
+def view_requests(request):
+    pass
