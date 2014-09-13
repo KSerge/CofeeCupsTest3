@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from .forms import PersonForm, UserForm
+from .forms import PersonForm, UserForm, UserLoginForm
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -71,7 +71,7 @@ def edit(request):
 def login_user(request):
     message = ''
     if request.method == 'POST':
-        user_form = UserForm(data=request.POST)
+        user_form = UserLoginForm(data=request.POST)
         username = request.POST['username']
         password = request.POST['password']
 
@@ -85,7 +85,7 @@ def login_user(request):
         else:
             message = INVALID_LOGIN_MESSAGE
     else:
-        user_form = UserForm()
+        user_form = UserLoginForm()
 
     request_context = RequestContext(
         request,

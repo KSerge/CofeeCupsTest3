@@ -32,3 +32,7 @@ div.sections-separator{
     border: 1px solid;
     border-right-color:	#484848;
 }
+div.command-buttons{
+    padding: 10px 0px;
+    clear: both;
+}
