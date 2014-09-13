@@ -6,6 +6,7 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
+{{person_form.media}}
 <script>
 $(document).ready(function () {
     $("#mainForm").submit(function(e){
@@ -38,7 +39,7 @@ $(document).ready(function () {
     <div class="overlay" id="overlay"></div>
     <div class="overlayContent" id="overlayContent" >
         <div style="text-align: center;">
-            <div style="color: #038; margin-bottom: 0px; font-size: 24px; padding-top: 10px; cursor: default;">Please wait</div>
+            <div id="overlay-message">Please wait</div>
         </div>
     </div>
     <form action="{% url 'edit' %}" method="post" enctype="multipart/form-data" id="mainForm">
