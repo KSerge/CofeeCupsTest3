@@ -22,6 +22,9 @@ class IncomingRequest(models.Model):
     visiting_date = models.DateTimeField(auto_now=True)
     priority = models.PositiveSmallIntegerField(default=0)
 
+    def __str__(self):
+        return 'path:' + self.path + ' priority:' + str(self.priority)
+
 
 class ModelObjectsTracker(models.Model):
     model_name = models.CharField(max_length=50, null=False, blank=False)
