@@ -13,19 +13,6 @@
 },
 {
     "pk": 1,
-    "model": "hello.person",
-    "fields": {
-        "user": 2,
-        "date_of_birth": "1977-01-20",
-        "bio": "Information about bio",
-        "jabber": "squidvard@jabberpl.org",
-        "skype": "skype profile",
-        "other_contacts": "Information about other contacts",
-        "profile_image": null
-    }
-},
-{
-    "pk": 1,
     "model": "auth.permission",
     "fields": {
     "codename": "add_logentry",
