@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+CREATE_ACTION_NAME = 'create'
+EDIT_ACTION_NAME = 'edit'
+DELETE_ACTION_NAME = 'delete'
 
 class Person(models.Model):
     user = models.OneToOneField(User, null=True)
