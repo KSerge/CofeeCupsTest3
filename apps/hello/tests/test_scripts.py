@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.conf import settings
 import os
 import time
+from ..models import Person
 
 
 class HelloAppTestCase(TestCase):
@@ -15,5 +16,5 @@ class HelloAppTestCase(TestCase):
         self.assertTrue(os.path.isfile(script_result_path))
         f = open(script_result_path, 'r')
         file_content = ' '.join(f.readlines())
-        self.assertIn('Person: objects: 1', file_content)
+        self.assertIn('Person: objects:', file_content)
         f.close()

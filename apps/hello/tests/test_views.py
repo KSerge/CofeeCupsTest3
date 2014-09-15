@@ -9,6 +9,7 @@ TEST_SKYPE_NAME = 'New Skype Name'
 TEST_USERNAME = 'Username'
 TEST_PASSWORD = 'password'
 
+
 class HelloAppTestCase(TestCase):
     fixtures = ['initial_data.json']
 
