@@ -27,6 +27,8 @@ class HelloAppTestCase(TestCase):
         self.assertTrue('person' in response.context)
         self.assertTrue(response.context['person'].user.first_name == 'Serhij')
         self.assertIn('<h1>42 Coffee Cups Test Assignment</h1>', response.content)
+        self.assertIn('Serhij', response.content)
+        self.assertIn('Krasovskyy', response.content)
 
     def test_view_request_view(self):
         url = reverse('index')
