@@ -30,6 +30,13 @@ class HelloAppTestCase(TestCase):
         self.assertIn('Serhij', response.content)
         self.assertIn('Krasovskyy', response.content)
 
+    def test_index_view(self):
+        person = Person.objects.get(pk=1)
+        person.delete()
+        url = reverse('index')
+        response = self.client.get(url)
+        self.assertIn('There is no Person data in system yet', response.content)
+
     def test_view_request_view(self):
         url = reverse('index')
         for x in range(0, 15):
