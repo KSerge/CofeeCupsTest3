@@ -8,6 +8,7 @@ from ..views import SAVE_FORM_ERRORS_MESSAGE, INVALID_LOGIN_MESSAGE
 TEST_SKYPE_NAME = 'New Skype Name'
 TEST_USERNAME = 'Username'
 TEST_PASSWORD = 'password'
+TEST_JABBER = 'test jabber'
 
 
 class HelloAppTestCase(TestCase):
@@ -23,6 +24,7 @@ class HelloAppTestCase(TestCase):
 
     def test_index_view(self):
         person = Person()
+        person.jabber = 'TEST_JABBER'
         person.save()
         url = reverse('index')
         response = self.client.get(url)
@@ -31,6 +33,8 @@ class HelloAppTestCase(TestCase):
         self.assertIn('<h1>42 Coffee Cups Test Assignment</h1>', response.content)
         self.assertIn('Serhij', response.content)
         self.assertIn('Krasovskyy', response.content)
+        self.assertIn('squidvard@jabberpl.org', response.content)
+        self.assertNotIn(TEST_JABBER, response.content)
 
     def test_index_view_without_person_object(self):
         person = Person.objects.get(pk=1)
