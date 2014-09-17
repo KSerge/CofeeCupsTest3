@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Person, IncomingRequest
+from .models import Person, IncomingRequest, ModelObjectsTracker
 
 
 class IncomingRequestAdmin(admin.ModelAdmin):
@@ -8,4 +8,5 @@ class IncomingRequestAdmin(admin.ModelAdmin):
 
 admin.site.register(Person)
 admin.site.register(IncomingRequest, IncomingRequestAdmin)
+admin.site.register(ModelObjectsTracker)
 
