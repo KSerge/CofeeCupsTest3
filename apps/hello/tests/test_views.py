@@ -87,6 +87,27 @@ class HelloAppTestCase(TestCase):
         response = self.client.post(url, {'username': TEST_USERNAME, 'password': TEST_PASSWORD})
         self.assertIn(INVALID_LOGIN_MESSAGE, response.content)
 
+    def test_records_retrieving_view(self):
+        for i in range(1, 20):
+            request = IncomingRequest()
+            request.url = 'test' + str(i)
+            request.priority = i
+            request.save()
+
+        records_expected = []
+        for record in IncomingRequest.objects.order_by('-visiting_date')[0:10]:
+            records_expected.append(record.pk)
+
+        url = reverse('requests')
+        response = self.client.get(url)
+        self.assertTrue(IncomingRequest.objects.all().count() == 20)
+
+        records_retrieved = []
+        for record in response.context['requests']:
+            records_retrieved.append(record.pk)
+
+        self.assertListEqual(records_expected, records_retrieved)
+
     def test_records_ordering_in_request_view(self):
         for i in range(1, 3):
             request = IncomingRequest()

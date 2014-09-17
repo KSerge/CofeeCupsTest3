@@ -23,7 +23,7 @@ class IncomingRequest(models.Model):
     priority = models.PositiveSmallIntegerField(default=0)
 
     def __str__(self):
-        return 'path:' + self.path + ' priority:' + str(self.priority)
+        return self.path + ' ' + str(self.visiting_date) + ' priority:' + str(self.priority)
 
 
 class ModelObjectsTracker(models.Model):
