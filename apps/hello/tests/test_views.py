@@ -22,6 +22,8 @@ class HelloAppTestCase(TestCase):
                              target_status_code=200)
 
     def test_index_view(self):
+        person = Person()
+        person.save()
         url = reverse('index')
         response = self.client.get(url)
         self.assertTrue('person' in response.context)
@@ -30,7 +32,7 @@ class HelloAppTestCase(TestCase):
         self.assertIn('Serhij', response.content)
         self.assertIn('Krasovskyy', response.content)
 
-    def test_index_view(self):
+    def test_index_view_without_person_object(self):
         person = Person.objects.get(pk=1)
         person.delete()
         url = reverse('index')
