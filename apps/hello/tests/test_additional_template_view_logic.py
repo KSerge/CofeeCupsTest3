@@ -18,4 +18,4 @@ class HelloAppTestCase(TestCase):
         c = Context({'person': person})
         test_template = Template("{% load hello_templatetags %} {% edit_link person %}")
         rendered = test_template.render(c)
-        self.assertIn('<a href="/admin/hello/person/1/">Edit</a>', rendered)
+        self.assertIn('<a href="/admin/hello/person/1/">(admin)</a>', rendered)
