@@ -18,7 +18,7 @@ div.toplevel-label-wrapper{
 div.label-wrapper{
     display: inline-block;
     min-width: 150px;
-    text-align: right;
+    text-align: left;
 }
 .text-allign-left{
     text-align: left !important;
@@ -74,4 +74,12 @@ div.command-buttons{
     font-size: 24px;
     padding-top: 10px;
     cursor: default;
+}
+.profile-image-details{
+    margin-left: 20px;
+    width: 580px;
+    word-wrap: break-word;
+}
+.profile-image-details a:after{
+    display: block;
 }

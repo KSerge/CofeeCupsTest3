@@ -28,6 +28,8 @@ $(document).ready(function () {
         });
         e.preventDefault();
     });
+
+    $(".profile-image-details a").after('</br>')
 });
 </script>
 {% endblock %}
@@ -60,10 +62,14 @@ $(document).ready(function () {
             {{ person_form.date_of_birth.errors }}
             {{ person_form.date_of_birth }}
             </p>
-            <div style="width: 500px; word-wrap: break-word;">
-                <div class="label-wrapper"><label for="profile_image">Photo:</label></div>
+            <div style="width: 600px; word-wrap: break-word;">
+                <div class="label-wrapper">
+                    <label for="profile_image">Photo:</label>
+                </div>
+                <div class="profile-image-details">
                 {{ person_form.profile_image.errors }}
                 {{ person_form.profile_image }}
+                </div>
             </div>
             {% include "hello/profile_image.html" with profile=person %}
         </div>
