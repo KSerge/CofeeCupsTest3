@@ -5,7 +5,7 @@ import time
 from ..models import Person
 
 
-class HelloAppTestCase(TestCase):
+class ModelsInfoTestCase(TestCase):
     def test_command_models_info(self):
         script_path = os.path.join(settings.BASE_DIR, 'collect_models_info.sh')
         os.system(script_path)

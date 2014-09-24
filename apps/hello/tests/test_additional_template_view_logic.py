@@ -4,7 +4,7 @@ from ..models import Person
 from django.template import Template, Context
 
 
-class HelloAppTestCase(TestCase):
+class AdditionalTemplateLogicTestCase(TestCase):
     def test_context_processor(self):
         url = reverse('index')
         response = self.client.get(url)
