@@ -4,7 +4,7 @@ from ..models import Person, IncomingRequest, ModelObjectsTracker
 from ..models import CREATE_ACTION_NAME, EDIT_ACTION_NAME, DELETE_ACTION_NAME
 
 
-class HelloAppTestCase(TestCase):
+class RequestsTrackingTestCase(TestCase):
     def test_request_is_stored_to_db(self):
         url = reverse('index')
         response = self.client.get(url)
@@ -15,11 +15,15 @@ class HelloAppTestCase(TestCase):
         requests = IncomingRequest.objects.filter(path=reverse('requests'))
         self.assertTrue(requests.count() == 1)
 
-    def test_model_signals(self):
+
+class SignalProcessingTestCase(TestCase):
+    def test_insert_model_signal(self):
         tracking_objects = ModelObjectsTracker.objects.filter(
             model_name=Person.__name__,
             type_of_event=CREATE_ACTION_NAME)
         self.assertEqual(tracking_objects.count(), 1)
+
+    def test_edit_model_signal(self):
         person = Person.objects.get(pk=1)
         person.skype = 'Skype Account'
         person.save()
@@ -27,6 +31,9 @@ class HelloAppTestCase(TestCase):
         tracking_objects = ModelObjectsTracker.objects.filter(
             model_name=Person.__name__,
             type_of_event=EDIT_ACTION_NAME)
+
+    def test_delete_model_signal(self):
+        person = Person.objects.get(pk=1)
         person.delete()
         tracking_objects = ModelObjectsTracker.objects.filter(
             model_name=Person.__name__,

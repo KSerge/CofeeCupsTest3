@@ -11,9 +11,7 @@ TEST_PASSWORD = 'password'
 TEST_JABBER = 'test jabber'
 
 
-class HelloAppTestCase(TestCase):
-    fixtures = ['initial_data.json']
-
+class DefaultViewTestCase(TestCase):
     def test_default_view(self):
         url = reverse('default')
         response = self.client.get(url)
@@ -21,6 +19,10 @@ class HelloAppTestCase(TestCase):
                              reverse('index'),
                              status_code=301,
                              target_status_code=200)
+
+
+class IndexViewTestCase(TestCase):
+    fixtures = ['initial_data.json']
 
     def test_index_view(self):
         person = Person()
@@ -43,6 +45,8 @@ class HelloAppTestCase(TestCase):
         response = self.client.get(url)
         self.assertIn('There is no Person data in system yet', response.content)
 
+
+class RequestsViewTestCase(TestCase):
     def test_view_request_view(self):
         url = reverse('index')
         for x in range(0, 15):
@@ -53,45 +57,6 @@ class HelloAppTestCase(TestCase):
         self.assertTrue(IncomingRequest.objects.all().count() > 10)
         self.assertTrue(response.context['requests'].count() == 10)
         self.assertIn('<h4>Requests:</h4>', response.content)
-
-    def test_edit_view_valid_data(self):
-        file_path = os.path.join(settings.BASE_DIR, 'apps', 'hello', 'tests', 'test_image.png')
-        f = open(file_path, 'r')
-        post_data = {'profile_image': f, 'skype': TEST_SKYPE_NAME}
-        url = reverse('edit')
-        response = self.client.post(url, post_data)
-        self.assertRedirects(response,
-                             reverse('index'),
-                             status_code=302,
-                             target_status_code=200,
-                             )
-        self.assertTrue(Person.objects.get(pk=1).skype == TEST_SKYPE_NAME)
-        f.close()
-        uploaded_file_path = os.path.join(settings.BASE_DIR,
-                                          'uploads',
-                                          'profile',
-                                          'test_image.png')
-        self.assertTrue(os.path.isfile(uploaded_file_path))
-        os.remove(uploaded_file_path)
-
-    def test_edit_view_not_valid_data(self):
-        url = reverse('edit')
-        response = self.client.post(url, {'date_of_birth': True})
-        self.assertIn(SAVE_FORM_ERRORS_MESSAGE, response.content)
-
-    def test_login_view_valid_data(self):
-        url = reverse('login')
-        response = self.client.post(url, {'username': 'Serge', 'password': '11111'})
-        self.assertRedirects(response,
-                             reverse('index'),
-                             status_code=302,
-                             target_status_code=200,
-                             )
-
-    def test_login_view_not_valid_data(self):
-        url = reverse('login')
-        response = self.client.post(url, {'username': TEST_USERNAME, 'password': TEST_PASSWORD})
-        self.assertIn(INVALID_LOGIN_MESSAGE, response.content)
 
     def test_records_retrieving_view(self):
         for i in range(1, 20):
@@ -126,6 +91,55 @@ class HelloAppTestCase(TestCase):
         self.assertEqual(response.context['requests'][0].priority, 2)
         self.assertEqual(response.context['requests'][1].priority, 1)
         self.assertEqual(response.context['requests'][2].priority, 0)
+
+
+class EditViewTestCase(TestCase):
+    fixtures = ['initial_data.json']
+
+    def test_edit_view_valid_data(self):
+        file_path = os.path.join(settings.BASE_DIR, 'apps', 'hello', 'tests', 'test_image.png')
+        f = open(file_path, 'r')
+        post_data = {'profile_image': f, 'skype': TEST_SKYPE_NAME}
+        url = reverse('edit')
+        response = self.client.post(url, post_data)
+        self.assertRedirects(response,
+                             reverse('index'),
+                             status_code=302,
+                             target_status_code=200,
+                             )
+        self.assertTrue(Person.objects.get(pk=1).skype == TEST_SKYPE_NAME)
+        f.close()
+        uploaded_file_path = os.path.join(settings.BASE_DIR,
+                                          'uploads',
+                                          'profile',
+                                          'test_image.png')
+        self.assertTrue(os.path.isfile(uploaded_file_path))
+        os.remove(uploaded_file_path)
+
+    def test_edit_view_not_valid_data(self):
+        url = reverse('edit')
+        response = self.client.post(url, {'date_of_birth': True})
+        self.assertIn(SAVE_FORM_ERRORS_MESSAGE, response.content)
+
+
+class LoginViewTestCase(TestCase):
+    fixtures = ['initial_data.json']
+
+    def test_login_view_valid_data(self):
+        url = reverse('login')
+        response = self.client.post(url, {'username': 'Serge', 'password': '11111'})
+        self.assertRedirects(response,
+                             reverse('index'),
+                             status_code=302,
+                             target_status_code=200,
+                             )
+
+    def test_login_view_not_valid_data(self):
+        url = reverse('login')
+        response = self.client.post(url, {'username': TEST_USERNAME, 'password': TEST_PASSWORD})
+        self.assertIn(INVALID_LOGIN_MESSAGE, response.content)
+
+
 
 
 
