@@ -1,7 +1,7 @@
 from django.forms import ModelForm, Textarea, PasswordInput
 from .models import Person
 from django.contrib.auth.models import User
-from .widjets import CalendarWidget
+from .widgets import CalendarWidget
 
 
 class PersonForm(ModelForm):
