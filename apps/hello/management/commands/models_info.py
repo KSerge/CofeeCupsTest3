@@ -31,15 +31,15 @@ class Command(BaseCommand):
                 module = load_source(module_name, module_name_to_path_map[module_name])
                 for name, data in inspect.getmembers(module, inspect.isclass):
                     table_name = module_name_to_app_name[module_name] + '_' + name.lower()
+                    objects_count = 0
                     if table_name in table_names:
-                        objects_count = 0
                         try:
                             model_objects = data.objects.all()
                             objects_count = model_objects.count()
                         except AttributeError:
                             self.stderr.write('error: could not determine model %s' % name)
 
-                        self.stdout.write('Model %s: objects: %d' % (name, objects_count))
-                        self.stderr.write('error: model %s: objects: %d' % (name, objects_count))
+                    self.stdout.write('Model %s: objects: %d' % (name, objects_count))
+                    self.stderr.write('error: model %s: objects: %d' % (name, objects_count))
             except ImportError:
                 pass
