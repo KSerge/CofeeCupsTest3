@@ -25,6 +25,7 @@ class Command(BaseCommand):
         cursor = connection.cursor()
         table_names = connection.introspection.get_table_list(cursor)
 
+        self.stderr.write(str(table_names))
         self.stderr.write('Models and amount of their objects')
         for module_name in module_name_to_path_map:
             try:
